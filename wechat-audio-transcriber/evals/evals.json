@@ -1,0 +1,42 @@
+{
+  "skill_name": "wechat-audio-transcriber",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "帮我把 /Users/xiaoyao/Documents/6-末-上-钨.m4a 转录成文字，然后校准生成 HTML",
+      "expected_output": "在 mp4-txt-converter/ 目录下生成 6-末-上-钨.txt 和 6-末-上-钨.html 两个文件",
+      "expectations": [
+        "生成 raw .txt 文件且行数 > 500",
+        "生成 .html 文件，包含完整 HTML 结构（<!DOCTYPE>, <html>, <head>, <body>）",
+        "HTML 中 '钨' 字出现次数 >= 50（证明专业术语已校准）",
+        "HTML 中不出现 '屋' 代替 '钨' 的情况（'房屋/屋顶' 等正常用词除外）",
+        "HTML 中包含 <span class='stock-tag'> 标注至少 3 个股票代码",
+        "HTML 中不包含 '木头姐' 或 'Cathie Wood'（反幻觉验证）",
+        "HTML 段落数 >= 30",
+        "音频文件 .m4a 不提交到 git"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "用 wechat-audio-transcriber 批量处理 ~/微课堂录音/ 目录下的所有 .m4a 文件",
+      "expected_output": "批量脚本跳过已转录的文件，只处理新文件",
+      "expectations": [
+        "batch_transcribe.sh 可以正常运行",
+        "已存在 .txt 的文件被跳过不重复转录",
+        "已存在 .html 的文件被跳过不重复校准",
+        "新文件正常完成转录 + 校准"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "对比 medium 和 large-v3 模型对 6-末-上-钨.m4a 的转录质量",
+      "expected_output": "large-v3 版本的专业术语错误明显少于 medium 版本",
+      "expectations": [
+        "large-v3 版本 '钨' 字正确率高于 medium 版本",
+        "large-v3 版本 '六氟化钨' 识别正确，medium 版本识别为 '六幅画屋'",
+        "large-v3 版本 '仲钨酸铵' 识别优于 medium 版本",
+        "术语对照表中至少 10 个术语在 large-v3 版本中得到改善"
+      ]
+    }
+  ]
+}
