@@ -1,4 +1,5 @@
-"""Transcribe .m4a audio to text using FunASR Paraformer (Chinese-optimized)."""
+"""Transcribe audio to text using FunASR Paraformer (Chinese-optimized).
+Supports: FLAC, WAV, M4A, MP3, OGG, and any format soundfile can read."""
 import sys
 import os
 from funasr import AutoModel
@@ -8,7 +9,8 @@ MODEL_ID = "iic/speech_paraformer-large-vad-punc_asr_nat-zh-cn-16k-common-vocab8
 
 def main():
     if len(sys.argv) != 2:
-        print("用法: python transcribe.py <audio_file.m4a>")
+        print("用法: python transcribe.py <audio_file>")
+        print("支持: FLAC, WAV, M4A, MP3 等常见格式")
         sys.exit(1)
 
     audio_path = sys.argv[1]
