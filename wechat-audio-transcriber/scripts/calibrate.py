@@ -2,6 +2,8 @@
 import sys
 import os
 import re
+import json
+from pathlib import Path
 from openai import OpenAI
 
 # ---------------------------------------------------------------------------
@@ -51,6 +53,8 @@ SYSTEM_PROMPT = """你是一个财经语音转录校准助手。你的任务是�
 - "吉瓦/几瓦" → "吉瓦"（GW）
 - "燃煤制级/燃煤之急" → "燃眉之急"
 - "请超长线/倾朝长线" → "倾向长线"
+- "德布与TI/德布TI/德布、TI" → "WTI"（原油基准 West Texas Intermediate，ASR 常将英文 "W" 音误识别为中文"德布"）
+- "加拿大西部精选原油" → 保留，即 WCS（Western Canadian Select，加拿大原油基准）
 
 ### 2. 段落化 + 标点 + 流畅行文
 - 将逐行碎片文本合并为连贯段落，每段表达一个完整小主题
@@ -58,30 +62,27 @@ SYSTEM_PROMPT = """你是一个财经语音转录校准助手。你的任务是�
 - 保留讲师口语风格（"大家注意""我多次强调"等），但去冗余语气词
 - 段落间用空行分隔
 
-### 3. 股票代码标注
-仅当文中实际提到上市公司时，用格式标注：
-<span class="stock-tag">公司名（市场：代码）</span>
+### 3. 股票代码标注（必须执行，不可跳过）
 
-主要公司：
-- 厦门钨业 → 600549.SH
-- 中钨高新 → 000657.SZ
-- 中船特气 → 688146.SH
-- 中巨芯 → 688549.SH
-- 昊华科技 → 600378.SH
-- 和远气体 → 002971.SZ
-- 阿尔蒙特工业 → ALMTF (OTC) / AII (多伦多)
-- 关东电化 → 4047.TYO
-- 中央硝子 → 4044.TYO
-- 厚成化工 → 093370.KS
-- 林德气体 → LIN (NASDAQ)
-- 默克集团 → MRK (法兰克福)
-- 三星电子 → 005930.KS
-- SK 海力士 → 000660.KS
-- 台积电 → TSM (NYSE) / 2330.TW
-- 美光科技 → MU (NASDAQ)
-- 中芯国际 → 688981.SH / 0981.HK
-- 华虹公司 → 688347.SH / 1347.HK
-- 科创50 → 000688.SH
+这是校准流程的核心步骤。你必须为文中实际提到的每一家上市公司添加 `<span class="stock-tag">` 标签。
+
+标注格式：`<span class="stock-tag">公司名（市场：代码）</span>`
+
+{stock_table}
+
+标注规则：
+- 文中只要出现了上表中的公司名称（中文名或英文名），就必须标注
+- 文中如果明确提到某只股票的代码（如"代码是ZENA"、"UAVS上市后"），也必须标注
+- 同一段中多次出现同一家公司时，仅首次出现需要标注
+- 标注位置：紧跟公司名/代码首次出现的位置
+- 示例：原文"英伟达的GPU芯片..." → 校准后"<span class="stock-tag">英伟达（NASDAQ：NVDA）</span>的GPU芯片..."
+- 示例：原文"在纳斯达克的代码是ZENA" → 如果ZENA在上表中，校准后添加标签
+- 如果上表中没有的公司，但文中明确说了它是上市公司（如"XXX上市后""代码是XXX"），也要标注，格式为 `<span class="stock-tag">公司名（代码：TICKER）</span>`，market 根据上下文填 NASDAQ/NYSE/SSE/SZSE 等
+
+重要：宁可多标注（假阳性），也不能漏标注（假阴性）。漏掉一家明确提到的上市公司是严重的校准错误。
+
+注意：以下不是公司名，严禁标注：
+- "时寒冰微课"/"时寒冰微课堂" → 这是课程/平台名称，不是上市公司
 
 ## 严禁做的事
 
@@ -123,6 +124,16 @@ def calibrate(txt_path: str, api_key: str, model: str = "deepseek-chat") -> str:
 
     basename = os.path.splitext(os.path.basename(txt_path))[0]
 
+    # Load external stock dictionary
+    stock_dict_path = Path(__file__).resolve().parent.parent / "references" / "stock_dict.json"
+    stock_table = ""
+    if stock_dict_path.exists():
+        stocks = json.loads(stock_dict_path.read_text())
+        stock_table = "主要公司：\n" + "\n".join(
+            f"- {s['name']} → {s['ticker']} ({s['market']})" for s in stocks
+        )
+    system_prompt = SYSTEM_PROMPT.replace("{stock_table}", stock_table)
+
     user_message = f"""原始转录文件名: {basename}
 
 请将以下语音识别原始转录校准为 HTML 文章。
@@ -144,7 +155,7 @@ def calibrate(txt_path: str, api_key: str, model: str = "deepseek-chat") -> str:
         max_tokens=16000,
         temperature=0.0,  # 确定性输出，杜绝幻觉和 emoji
         messages=[
-            {"role": "system", "content": SYSTEM_PROMPT},
+            {"role": "system", "content": system_prompt},
             {"role": "user", "content": user_message},
         ],
     )

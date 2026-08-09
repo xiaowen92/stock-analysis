@@ -26866,5 +26866,875 @@
         "NYSE"
       ]
     }
+  },
+  "600549": {
+    "fetched_at": "2026-07-11T11:53:26.981004",
+    "info": {
+      "symbol": "600549",
+      "name": "厦门钨业",
+      "market": "SH",
+      "sector": "A股",
+      "industry": "",
+      "marketCap": null,
+      "website": ""
+    }
+  },
+  "000657": {
+    "fetched_at": "2026-07-11T11:53:26.989275",
+    "info": {
+      "symbol": "000657",
+      "name": "中钨高新",
+      "market": "SZ",
+      "sector": "A股",
+      "industry": "",
+      "marketCap": null,
+      "website": ""
+    }
+  },
+  "4047.TYO": {
+    "fetched_at": "2026-07-11T11:53:27.791229",
+    "info": {
+      "error": "not_found"
+    }
+  },
+  "4044.TYO": {
+    "fetched_at": "2026-07-11T11:53:28.096081",
+    "info": {
+      "error": "not_found"
+    }
+  },
+  "093370.KS": {
+    "fetched_at": "2026-07-11T11:53:28.197547",
+    "info": {
+      "symbol": "093370.KS",
+      "name": "Foosung Co., Ltd.",
+      "sector": "Basic Materials",
+      "industry": "Specialty Chemicals",
+      "market": "KSC",
+      "marketCap": 1473688240128,
+      "website": "https://www.foosungchem.com"
+    }
+  },
+  "688146": {
+    "fetched_at": "2026-07-11T11:53:28.212452",
+    "info": {
+      "symbol": "688146",
+      "name": "中船特气",
+      "market": "SH",
+      "sector": "A股",
+      "industry": "",
+      "marketCap": null,
+      "website": ""
+    }
+  },
+  "688549": {
+    "fetched_at": "2026-07-11T11:53:28.224883",
+    "info": {
+      "symbol": "688549",
+      "name": "中巨芯",
+      "market": "SH",
+      "sector": "A股",
+      "industry": "",
+      "marketCap": null,
+      "website": ""
+    }
+  },
+  "600378": {
+    "fetched_at": "2026-07-11T11:53:28.248921",
+    "info": {
+      "symbol": "600378",
+      "name": "昊华科技",
+      "market": "SH",
+      "sector": "A股",
+      "industry": "",
+      "marketCap": null,
+      "website": ""
+    }
+  },
+  "002971": {
+    "fetched_at": "2026-07-11T11:53:28.258930",
+    "info": {
+      "symbol": "002971",
+      "name": "和远气体",
+      "market": "SZ",
+      "sector": "A股",
+      "industry": "",
+      "marketCap": null,
+      "website": ""
+    }
+  },
+  "ALMTF": {
+    "fetched_at": "2026-07-11T11:53:28.634327",
+    "info": {
+      "error": "not_found"
+    }
+  },
+  "4047.T": {
+    "fetched_at": "2026-07-11T11:53:28.723443",
+    "info": {
+      "symbol": "4047.T",
+      "name": "Kanto Denka Kogyo Co., Ltd.",
+      "sector": "Basic Materials",
+      "industry": "Specialty Chemicals",
+      "market": "JPX",
+      "marketCap": 176076619776,
+      "website": "https://www.kantodenka.co.jp"
+    }
+  },
+  "000660.KS": {
+    "fetched_at": "2026-07-11T11:53:28.811055",
+    "info": {
+      "symbol": "000660.KS",
+      "name": "SK hynix Inc.",
+      "sector": "Technology",
+      "industry": "Semiconductors",
+      "market": "KSC",
+      "marketCap": 1547483696070656,
+      "website": "https://www.skhynix.com"
+    }
+  },
+  "4044.T": {
+    "fetched_at": "2026-07-11T11:53:28.909228",
+    "info": {
+      "symbol": "4044.T",
+      "name": "Central Glass Co., Ltd.",
+      "sector": "Basic Materials",
+      "industry": "Specialty Chemicals",
+      "market": "JPX",
+      "marketCap": 103261945856,
+      "website": "https://www.cgco.co.jp"
+    }
+  },
+  "600150": {
+    "fetched_at": "2026-07-11T11:53:28.927233",
+    "info": {
+      "symbol": "600150",
+      "name": "中国船舶",
+      "market": "SH",
+      "sector": "A股",
+      "industry": "",
+      "marketCap": null,
+      "website": ""
+    }
+  },
+  "688981": {
+    "fetched_at": "2026-07-11T11:53:28.940500",
+    "info": {
+      "symbol": "688981",
+      "name": "中芯国际",
+      "market": "SH",
+      "sector": "A股",
+      "industry": "",
+      "marketCap": null,
+      "website": ""
+    }
+  },
+  "TSM": {
+    "fetched_at": "2026-07-11T11:53:29.021874",
+    "info": {
+      "symbol": "TSM",
+      "name": "Taiwan Semiconductor Manufacturing Company Limited",
+      "sector": "Technology",
+      "industry": "Semiconductors",
+      "market": "NYQ",
+      "marketCap": 2251500027904,
+      "website": "https://www.tsmc.com"
+    }
+  },
+  "LIN": {
+    "fetched_at": "2026-07-11T11:53:29.103640",
+    "info": {
+      "symbol": "LIN",
+      "name": "Linde plc",
+      "sector": "Basic Materials",
+      "industry": "Specialty Chemicals",
+      "market": "NMS",
+      "marketCap": 244946960384,
+      "website": "https://www.linde.com"
+    }
+  },
+  "MRK": {
+    "fetched_at": "2026-07-11T11:53:29.199865",
+    "info": {
+      "symbol": "MRK",
+      "name": "Merck & Co., Inc.",
+      "sector": "Healthcare",
+      "industry": "Drug Manufacturers - General",
+      "market": "NYQ",
+      "marketCap": 305122115584,
+      "website": "https://www.merck.com"
+    }
+  },
+  "005930.KS": {
+    "fetched_at": "2026-07-11T11:53:29.290457",
+    "info": {
+      "symbol": "005930.KS",
+      "name": "Samsung Electronics Co., Ltd.",
+      "sector": "Technology",
+      "industry": "Consumer Electronics",
+      "market": "KSC",
+      "marketCap": 1871470527512576,
+      "website": "https://www.samsung.com"
+    }
+  },
+  "RCAT": {
+    "fetched_at": "2026-07-11T11:53:38.739888",
+    "info": {
+      "symbol": "RCAT",
+      "name": "Red Cat Holdings, Inc.",
+      "sector": "Industrials",
+      "industry": "Aerospace & Defense",
+      "market": "NCM",
+      "marketCap": 1343857792,
+      "website": "https://redcat.red"
+    }
+  },
+  "OSK": {
+    "fetched_at": "2026-07-11T11:53:38.828579",
+    "info": {
+      "symbol": "OSK",
+      "name": "Oshkosh Corporation",
+      "sector": "Industrials",
+      "industry": "Farm & Heavy Construction Machinery",
+      "market": "NYQ",
+      "marketCap": 9124490240,
+      "website": "https://www.oshkoshcorp.com"
+    }
+  },
+  "LHX": {
+    "fetched_at": "2026-07-11T11:53:38.914903",
+    "info": {
+      "symbol": "LHX",
+      "name": "L3Harris Technologies, Inc.",
+      "sector": "Industrials",
+      "industry": "Aerospace & Defense",
+      "market": "NYQ",
+      "marketCap": 54168977408,
+      "website": "https://www.l3harris.com"
+    }
+  },
+  "MP": {
+    "fetched_at": "2026-07-11T11:53:38.998307",
+    "info": {
+      "symbol": "MP",
+      "name": "MP Materials Corp.",
+      "sector": "Basic Materials",
+      "industry": "Other Industrial Metals & Mining",
+      "market": "NYQ",
+      "marketCap": 9294538752,
+      "website": "https://mpmaterials.com"
+    }
+  },
+  "USAR": {
+    "fetched_at": "2026-07-11T11:53:39.088271",
+    "info": {
+      "symbol": "USAR",
+      "name": "USA Rare Earth, Inc.",
+      "sector": "Basic Materials",
+      "industry": "Other Industrial Metals & Mining",
+      "market": "NGM",
+      "marketCap": 4521287168,
+      "website": "https://www.usare.com"
+    }
+  },
+  "ONDS": {
+    "fetched_at": "2026-07-11T11:53:39.181314",
+    "info": {
+      "symbol": "ONDS",
+      "name": "Ondas Inc.",
+      "sector": "Technology",
+      "industry": "Communication Equipment",
+      "market": "NCM",
+      "marketCap": 4137028352,
+      "website": "https://www.ondas.com"
+    }
+  },
+  "AVEX": {
+    "fetched_at": "2026-07-11T11:53:39.256262",
+    "info": {
+      "symbol": "AVEX",
+      "name": "AEVEX Corp.",
+      "sector": "Industrials",
+      "industry": "Aerospace & Defense",
+      "market": "NYQ",
+      "marketCap": 929501632,
+      "website": "https://www.aevex.com"
+    }
+  },
+  "600505": {
+    "fetched_at": "2026-07-11T11:53:42.155288",
+    "info": {
+      "symbol": "600505",
+      "name": "西昌电力",
+      "market": "SH",
+      "sector": "A股",
+      "industry": "",
+      "marketCap": null,
+      "website": ""
+    }
+  },
+  "600578": {
+    "fetched_at": "2026-07-11T11:53:42.164181",
+    "info": {
+      "symbol": "600578",
+      "name": "京能电力",
+      "market": "SH",
+      "sector": "A股",
+      "industry": "",
+      "marketCap": null,
+      "website": ""
+    }
+  },
+  "600438": {
+    "fetched_at": "2026-07-11T11:53:42.182234",
+    "info": {
+      "symbol": "600438",
+      "name": "通威股份",
+      "market": "SH",
+      "sector": "A股",
+      "industry": "",
+      "marketCap": null,
+      "website": ""
+    }
+  },
+  "601012": {
+    "fetched_at": "2026-07-11T11:53:42.190568",
+    "info": {
+      "symbol": "601012",
+      "name": "隆基绿能",
+      "market": "SH",
+      "sector": "A股",
+      "industry": "",
+      "marketCap": null,
+      "website": ""
+    }
+  },
+  "002202": {
+    "fetched_at": "2026-07-11T11:53:42.198595",
+    "info": {
+      "symbol": "002202",
+      "name": "金风科技",
+      "market": "SZ",
+      "sector": "A股",
+      "industry": "",
+      "marketCap": null,
+      "website": ""
+    }
+  },
+  "601615": {
+    "fetched_at": "2026-07-11T11:53:42.206545",
+    "info": {
+      "symbol": "601615",
+      "name": "明阳智能",
+      "market": "SH",
+      "sector": "A股",
+      "industry": "",
+      "marketCap": null,
+      "website": ""
+    }
+  },
+  "300748": {
+    "fetched_at": "2026-07-11T11:53:42.214571",
+    "info": {
+      "symbol": "300748",
+      "name": "金力永磁",
+      "market": "SZ",
+      "sector": "A股",
+      "industry": "",
+      "marketCap": null,
+      "website": ""
+    }
+  },
+  "603162": {
+    "fetched_at": "2026-07-11T11:53:42.222629",
+    "info": {
+      "symbol": "603162",
+      "name": "海通发展",
+      "market": "SH",
+      "sector": "A股",
+      "industry": "",
+      "marketCap": null,
+      "website": ""
+    }
+  },
+  "600900": {
+    "fetched_at": "2026-07-11T11:53:42.230675",
+    "info": {
+      "symbol": "600900",
+      "name": "长江电力",
+      "market": "SH",
+      "sector": "A股",
+      "industry": "",
+      "marketCap": null,
+      "website": ""
+    }
+  },
+  "600025": {
+    "fetched_at": "2026-07-11T11:53:42.238748",
+    "info": {
+      "symbol": "600025",
+      "name": "华能水电",
+      "market": "SH",
+      "sector": "A股",
+      "industry": "",
+      "marketCap": null,
+      "website": ""
+    }
+  },
+  "600744": {
+    "fetched_at": "2026-07-11T11:53:42.247235",
+    "info": {
+      "symbol": "600744",
+      "name": "华银电力",
+      "market": "SH",
+      "sector": "A股",
+      "industry": "",
+      "marketCap": null,
+      "website": ""
+    }
+  },
+  "601991": {
+    "fetched_at": "2026-07-11T11:53:42.255293",
+    "info": {
+      "symbol": "601991",
+      "name": "大唐发电",
+      "market": "SH",
+      "sector": "A股",
+      "industry": "",
+      "marketCap": null,
+      "website": ""
+    }
+  },
+  "600011": {
+    "fetched_at": "2026-07-11T11:53:42.263538",
+    "info": {
+      "symbol": "600011",
+      "name": "华能国际",
+      "market": "SH",
+      "sector": "A股",
+      "industry": "",
+      "marketCap": null,
+      "website": ""
+    }
+  },
+  "600310": {
+    "fetched_at": "2026-07-11T11:53:42.271710",
+    "info": {
+      "symbol": "600310",
+      "name": "广西能源",
+      "market": "SH",
+      "sector": "A股",
+      "industry": "",
+      "marketCap": null,
+      "website": ""
+    }
+  },
+  "600726": {
+    "fetched_at": "2026-07-11T11:53:42.279823",
+    "info": {
+      "symbol": "600726",
+      "name": "华电能源",
+      "market": "SH",
+      "sector": "A股",
+      "industry": "",
+      "marketCap": null,
+      "website": ""
+    }
+  },
+  "001896": {
+    "fetched_at": "2026-07-11T11:53:42.287832",
+    "info": {
+      "symbol": "001896",
+      "name": "豫能控股",
+      "market": "SZ",
+      "sector": "A股",
+      "industry": "",
+      "marketCap": null,
+      "website": ""
+    }
+  },
+  "601985": {
+    "fetched_at": "2026-07-11T11:53:42.296004",
+    "info": {
+      "symbol": "601985",
+      "name": "中国核电",
+      "market": "SH",
+      "sector": "A股",
+      "industry": "",
+      "marketCap": null,
+      "website": ""
+    }
+  },
+  "601611": {
+    "fetched_at": "2026-07-11T11:53:42.304190",
+    "info": {
+      "symbol": "601611",
+      "name": "中国核建",
+      "market": "SH",
+      "sector": "A股",
+      "industry": "",
+      "marketCap": null,
+      "website": ""
+    }
+  },
+  "300087": {
+    "fetched_at": "2026-07-11T11:53:45.127831",
+    "info": {
+      "symbol": "300087",
+      "name": "ST荃银",
+      "market": "SZ",
+      "sector": "A股",
+      "industry": "",
+      "marketCap": null,
+      "website": ""
+    }
+  },
+  "600313": {
+    "fetched_at": "2026-07-11T11:53:45.136190",
+    "info": {
+      "symbol": "600313",
+      "name": "农发种业",
+      "market": "SH",
+      "sector": "A股",
+      "industry": "",
+      "marketCap": null,
+      "website": ""
+    }
+  },
+  "000713": {
+    "fetched_at": "2026-07-11T11:53:45.144392",
+    "info": {
+      "symbol": "000713",
+      "name": "国投丰乐",
+      "market": "SZ",
+      "sector": "A股",
+      "industry": "",
+      "marketCap": null,
+      "website": ""
+    }
+  },
+  "600108": {
+    "fetched_at": "2026-07-11T11:53:45.152403",
+    "info": {
+      "symbol": "600108",
+      "name": "亚盛集团",
+      "market": "SH",
+      "sector": "A股",
+      "industry": "",
+      "marketCap": null,
+      "website": ""
+    }
+  },
+  "000998": {
+    "fetched_at": "2026-07-11T11:53:45.160833",
+    "info": {
+      "symbol": "000998",
+      "name": "隆平高科",
+      "market": "SZ",
+      "sector": "A股",
+      "industry": "",
+      "marketCap": null,
+      "website": ""
+    }
+  },
+  "002041": {
+    "fetched_at": "2026-07-11T11:53:45.169199",
+    "info": {
+      "symbol": "002041",
+      "name": "登海种业",
+      "market": "SZ",
+      "sector": "A股",
+      "industry": "",
+      "marketCap": null,
+      "website": ""
+    }
+  },
+  "002385": {
+    "fetched_at": "2026-07-11T11:53:45.177809",
+    "info": {
+      "symbol": "002385",
+      "name": "大北农",
+      "market": "SZ",
+      "sector": "A股",
+      "industry": "",
+      "marketCap": null,
+      "website": ""
+    }
+  },
+  "601952": {
+    "fetched_at": "2026-07-11T11:53:45.196658",
+    "info": {
+      "symbol": "601952",
+      "name": "苏垦农发",
+      "market": "SH",
+      "sector": "A股",
+      "industry": "",
+      "marketCap": null,
+      "website": ""
+    }
+  },
+  "600598": {
+    "fetched_at": "2026-07-11T11:53:45.204964",
+    "info": {
+      "symbol": "600598",
+      "name": "北大荒",
+      "market": "SH",
+      "sector": "A股",
+      "industry": "",
+      "marketCap": null,
+      "website": ""
+    }
+  },
+  "600127": {
+    "fetched_at": "2026-07-11T11:53:45.212927",
+    "info": {
+      "symbol": "600127",
+      "name": "金健米业",
+      "market": "SH",
+      "sector": "A股",
+      "industry": "",
+      "marketCap": null,
+      "website": ""
+    }
+  },
+  "002982": {
+    "fetched_at": "2026-07-11T11:53:45.221150",
+    "info": {
+      "symbol": "002982",
+      "name": "湘佳股份",
+      "market": "SZ",
+      "sector": "A股",
+      "industry": "",
+      "marketCap": null,
+      "website": ""
+    }
+  },
+  "300967": {
+    "fetched_at": "2026-07-11T11:53:45.229074",
+    "info": {
+      "symbol": "300967",
+      "name": "晓鸣股份",
+      "market": "SZ",
+      "sector": "A股",
+      "industry": "",
+      "marketCap": null,
+      "website": ""
+    }
+  },
+  "CTVA": {
+    "fetched_at": "2026-07-11T11:53:45.564397",
+    "info": {
+      "symbol": "CTVA",
+      "name": "Corteva, Inc.",
+      "sector": "Basic Materials",
+      "industry": "Agricultural Inputs",
+      "market": "NYQ",
+      "marketCap": 57304494080,
+      "website": "https://www.corteva.com"
+    }
+  },
+  "SEED": {
+    "fetched_at": "2026-07-11T11:53:45.648218",
+    "info": {
+      "symbol": "SEED",
+      "name": "Origin Agritech Limited",
+      "sector": "Basic Materials",
+      "industry": "Agricultural Inputs",
+      "market": "NCM",
+      "marketCap": 12248470,
+      "website": "https://originagritech.com"
+    }
+  },
+  "BIOX": {
+    "fetched_at": "2026-07-11T11:53:45.737508",
+    "info": {
+      "symbol": "BIOX",
+      "name": "Bioceres Crop Solutions Corp.",
+      "sector": "Basic Materials",
+      "industry": "Agricultural Inputs",
+      "market": "NMS",
+      "marketCap": 21901614,
+      "website": "https://investors.biocerescrops.com/home/default.aspx"
+    }
+  },
+  "RKDA": {
+    "fetched_at": "2026-07-11T11:53:45.824180",
+    "info": {
+      "symbol": "RKDA",
+      "name": "Arcadia Biosciences, Inc.",
+      "sector": "Consumer Defensive",
+      "industry": "Packaged Foods",
+      "market": "NCM",
+      "marketCap": 1494256,
+      "website": "https://arcadiabio.com"
+    }
+  },
+  "TSN": {
+    "fetched_at": "2026-07-11T11:53:45.925350",
+    "info": {
+      "symbol": "TSN",
+      "name": "Tyson Foods, Inc.",
+      "sector": "Consumer Defensive",
+      "industry": "Farm Products",
+      "market": "NYQ",
+      "marketCap": 20363644928,
+      "website": "https://www.tysonfoods.com"
+    }
+  },
+  "ADM": {
+    "fetched_at": "2026-07-11T11:53:46.010240",
+    "info": {
+      "symbol": "ADM",
+      "name": "Archer-Daniels-Midland Company",
+      "sector": "Consumer Defensive",
+      "industry": "Farm Products",
+      "market": "NYQ",
+      "marketCap": 38754123776,
+      "website": "https://www.adm.com"
+    }
+  },
+  "BG": {
+    "fetched_at": "2026-07-11T11:53:46.095564",
+    "info": {
+      "symbol": "BG",
+      "name": "Bunge Global SA",
+      "sector": "Consumer Defensive",
+      "industry": "Farm Products",
+      "market": "NYQ",
+      "marketCap": 22180151296,
+      "website": "https://www.bunge.com"
+    }
+  },
+  "INTC": {
+    "fetched_at": "2026-08-08T14:08:59.823093",
+    "info": {
+      "symbol": "INTC",
+      "name": "Intel Corporation",
+      "sector": "Technology",
+      "industry": "Semiconductors",
+      "market": "NMS",
+      "marketCap": 512722567168,
+      "website": "https://www.intel.com"
+    }
+  },
+  "NVDA": {
+    "fetched_at": "2026-08-08T14:08:59.927924",
+    "info": {
+      "symbol": "NVDA",
+      "name": "NVIDIA Corporation",
+      "sector": "Technology",
+      "industry": "Semiconductors",
+      "market": "NMS",
+      "marketCap": 5424535306240,
+      "website": "https://www.nvidia.com"
+    }
+  },
+  "603138": {
+    "fetched_at": "2026-08-08T14:08:59.943120",
+    "info": {
+      "symbol": "603138",
+      "name": "海量数据",
+      "market": "SH",
+      "sector": "A股",
+      "industry": "",
+      "marketCap": null,
+      "website": ""
+    }
+  },
+  "AMZN": {
+    "fetched_at": "2026-08-08T14:09:00.053419",
+    "info": {
+      "symbol": "AMZN",
+      "name": "Amazon.com, Inc.",
+      "sector": "Consumer Cyclical",
+      "industry": "Internet Retail",
+      "market": "NMS",
+      "marketCap": 2960627335168,
+      "website": "https://www.amazon.com"
+    }
+  },
+  "IQ": {
+    "fetched_at": "2026-08-08T14:22:56.139160",
+    "info": {
+      "symbol": "IQ",
+      "name": "iQIYI, Inc.",
+      "sector": "Communication Services",
+      "industry": "Entertainment",
+      "market": "NMS",
+      "marketCap": 1283482880,
+      "website": "https://www.iqiyi.com"
+    }
+  },
+  "USA": {
+    "fetched_at": "2026-08-08T14:22:56.237605",
+    "info": {
+      "symbol": "USA",
+      "name": "Liberty All-Star Equity Fund",
+      "sector": "Financial Services",
+      "industry": "Asset Management",
+      "market": "NYQ",
+      "marketCap": 1852398464,
+      "website": "https://www.all-starfunds.com/fundfacts-usa.php"
+    }
+  },
+  "UAMY": {
+    "fetched_at": "2026-08-08T14:25:22.159106",
+    "info": {
+      "symbol": "UAMY",
+      "name": "United States Antimony Corporation",
+      "sector": "Basic Materials",
+      "industry": "Other Industrial Metals & Mining",
+      "market": "NYQ",
+      "marketCap": 1015071424,
+      "website": "https://www.usantimony.com"
+    }
+  },
+  "ZENA": {
+    "fetched_at": "2026-08-08T14:25:22.247796",
+    "info": {
+      "symbol": "ZENA",
+      "name": "ZenaTech, Inc.",
+      "sector": "Technology",
+      "industry": "Software - Infrastructure",
+      "market": "NCM",
+      "marketCap": 146658912,
+      "website": "https://www.zenatech.com"
+    }
+  },
+  "UAVS": {
+    "fetched_at": "2026-08-08T14:25:22.333415",
+    "info": {
+      "symbol": "UAVS",
+      "name": "AgEagle Aerial Systems, Inc.",
+      "sector": "Technology",
+      "industry": "Computer Hardware",
+      "market": "ASE",
+      "marketCap": 53921068,
+      "website": "https://www.eaglenxt.com"
+    }
+  },
+  "TSLA": {
+    "fetched_at": "2026-08-08T23:23:26.898502",
+    "info": {
+      "symbol": "TSLA",
+      "name": "Tesla, Inc.",
+      "sector": "Consumer Cyclical",
+      "industry": "Auto Manufacturers",
+      "market": "NMS",
+      "marketCap": 1297742299136,
+      "website": "https://www.tesla.com"
+    }
+  },
+  "000660": {
+    "fetched_at": "2026-08-08T23:23:27.204375",
+    "info": {
+      "error": "not_found"
+    }
+  },
+  "005930": {
+    "fetched_at": "2026-08-08T23:23:27.517281",
+    "info": {
+      "error": "not_found"
+    }
   }
 }

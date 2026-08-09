@@ -142,28 +142,99 @@ def verify_cn(ticker):
         return None
 
 
-def detect_market(ticker, tag_text):
-    """Detect market from ticker and tag text. Returns 'US' or 'CN'."""
+# Market suffix patterns → (market_code, display_name)
+_MARKET_SUFFIX = {
+    ".SH": ("CN", "SSE"),
+    ".SZ": ("CN", "SZSE"),
+    ".TYO": ("JP", "TSE"),
+    ".T": ("JP", "TSE"),
+    ".KS": ("KR", "KRX"),
+    ".KQ": ("KR", "KOSDAQ"),
+    ".DE": ("DE", "FSE"),
+    ".F": ("DE", "FSE"),
+    ".HK": ("HK", "HKEX"),
+    ".TW": ("TW", "TWSE"),
+    ".L": ("UK", "LSE"),
+}
+
+_MARKET_HINT = re.compile(
+    r'(NASDAQ|NYSE|AMEX|OTC|TYO|TSE|KS|KOSPI|KRX|FRA|FSE|XETRA|'
+    r'法兰克福|香港|HKEX|TWSE|LSE|伦敦)',
+    re.I,
+)
+
+
+def detect_market(ticker, tag_text=""):
+    """Detect market from ticker suffix or tag context.
+
+    Returns market code: CN, US, JP, KR, DE, HK, TW, UK.
+    """
     t = ticker.upper()
-    # Explicit CN suffixes
-    if re.search(r'\.(SH|SZ)$', t):
-        return "CN"
-    # Market indicators in tag text
-    if re.search(r'(上海|深圳|科创|SH\b|SZ\b)', tag_text):
-        return "CN"
-    if re.search(r'(NASDAQ|NYSE|OTC|TYO|KS|\.TW)', tag_text):
-        return "US"
-    # Numeric ticker → CN (A-share codes are 6-digit numbers)
+
+    # Check suffix patterns first (most reliable)
+    for suffix, (market, _) in _MARKET_SUFFIX.items():
+        if t.endswith(suffix):
+            return market
+
+    # Context hints in tag text
+    m = _MARKET_HINT.search(tag_text) if tag_text else None
+    if m:
+        hint = m.group(1).upper()
+        if hint in ("NASDAQ", "NYSE", "AMEX", "OTC"):
+            return "US"
+        if hint in ("TYO", "TSE"):
+            return "JP"
+        if hint in ("KS", "KOSPI", "KRX"):
+            return "KR"
+        if hint in ("FRA", "FSE", "XETRA") or hint == "法兰克福":
+            return "DE"
+        if hint == "HKEX" or hint == "香港":
+            return "HK"
+        if hint == "TWSE":
+            return "TW"
+        if hint == "LSE" or hint == "伦敦":
+            return "UK"
+
+    # Numeric 6-digit → CN A-share
     if re.match(r'^\d{6}$', ticker):
         return "CN"
-    # Plain alphabetic → US (e.g. MU, INTC, TSM, AAPL)
+
+    # Plain alphabetic → US (default)
     return "US"
 
 
 # ---------------------------------------------------------------------------
 # HTML parsing
 # ---------------------------------------------------------------------------
-TICKER_FROM_TAG = re.compile(r'[：:]\s*([A-Za-z0-9.]+)')
+
+def _extract_ticker(tag_text):
+    """Extract ticker from stock-tag text. Handles multiple formats:
+
+    - "英伟达（NASDAQ：MU）" → MU
+    - "厦门钨业（600549.SH）" → 600549.SH
+    - "关东电化（4047.TYO）" → 4047.TYO
+    - "西昌电力（SH：600505）" → 600505
+    - "RCAT" → RCAT
+    """
+    # Format 1: full-width/half-width parens with colon → extract after colon
+    # e.g. "（NASDAQ：MU）" → MU, "（SH：600505）" → 600505
+    m = re.search(r'[（(][^）)]*[：:]\s*([A-Za-z0-9.]+)[）)]', tag_text)
+    if m:
+        return m.group(1)
+
+    # Format 2: parens with dot-suffix ticker → extract with suffix
+    # e.g. "（600549.SH）" → 600549.SH, "（4047.TYO）" → 4047.TYO
+    m = re.search(r'[（(]([A-Za-z0-9]+(?:\.[A-Za-z0-9]+)?)[）)]', tag_text)
+    if m:
+        return m.group(1)
+
+    # Format 3: pure ticker, no parens
+    # e.g. "RCAT", "ONDS", "AVEX"
+    m = re.match(r'^([A-Za-z0-9.]+)$', tag_text)
+    if m:
+        return m.group(1)
+
+    return None
 
 
 def parse_stock_tags(html):
@@ -172,9 +243,9 @@ def parse_stock_tags(html):
     results = []
     for span in soup.find_all("span", class_="stock-tag"):
         text = span.get_text(strip=True)
-        m = TICKER_FROM_TAG.search(text)
-        if m:
-            results.append((span, m.group(1), text))
+        ticker = _extract_ticker(text)
+        if ticker:
+            results.append((span, ticker, text))
     return results
 
 
@@ -258,6 +329,8 @@ HARD_FIXES = [
     ("大家好，欢迎您来到三宾", "大家好，欢迎您来到时寒冰"),
     ("这里是三滨", "这里是时寒冰"),
     ("这里是三宾", "这里是时寒冰"),
+    ("德布与TI和加拿大西部精选原油", "WTI和加拿大西部精选原油"),
+    ("德布与TI", "WTI"),
 ]
 
 
@@ -266,6 +339,118 @@ def apply_hard_fixes(html):
         if wrong in html:
             html = html.replace(wrong, correct)
     return html
+
+
+# ---------------------------------------------------------------------------
+# Phase 3.5: Tag bare tickers (ZENA, UAVS, etc.) in text
+# ---------------------------------------------------------------------------
+
+# Common abbreviations/acronyms that look like tickers but aren't
+_TICKER_STOP_WORDS = frozenset({
+    "AI", "CPU", "GPU", "SSD", "HBM", "ETF", "IPO", "CEO", "CFO", "COO",
+    "GDP", "IOT", "AR", "VR", "MR", "PC", "OS", "UI", "UX", "API", "SDK",
+    "USB", "LED", "LCD", "OLED", "RAM", "ROM", "LAN", "WAN", "WIFI", "LTE",
+    "SAAS", "PAAS", "IAAS", "QA", "QC", "RND", "BOM", "ROI", "ROE", "PE",
+    "PB", "PS", "EPS", "DCF", "IPO", "MNA", "LBO", "KPI", "OKR", "CRM",
+    "ERP", "SCM", "HRM", "CMS", "CDN", "DNS", "ISP", "VPN", "SSL", "TLS",
+    "HTTP", "HTML", "CSS", "XML", "SQL", "NOSQL", "JSON", "CSV", "YAML",
+    "MVC", "OOP", "TDD", "BDD", "CI", "CD", "PR", "MR", "LGTM", "WIP",
+    "IMO", "FWIW", "TLDR", "FYI", "ETA", "TBD", "TBA", "N/A", "DIY",
+    "OK", "US", "UK", "EU", "UN", "JP", "CN", "KR", "DE", "FR", "IN",
+    "COVID", "NASA", "NATO", "OPEC", "FOMC", "SEC", "FDA", "EPA", "IRS",
+    "NYSE", "NASDAQ", "AMEX", "OTC", "SSE", "SZSE", "HKEX",
+    "USA", "IQ",  # common in product/vendor names, not stock references
+})
+
+
+def _ticker_info_map():
+    """Return {ticker: (name, market)} from us_stocks.json for known tickers."""
+    us_path = Path(__file__).resolve().parent.parent / "references" / "us_stocks.json"
+    if not us_path.exists():
+        return {}
+    data = json.loads(us_path.read_text())
+    result = {}
+    for c in data:
+        ticker = (c.get("ticker") or "").upper()
+        name = c.get("name", "")
+        market = c.get("market", "")
+        if ticker and name and ticker not in result:
+            result[ticker] = (name, market)
+    return result
+
+
+def tag_bare_tickers(html):
+    """Scan text for bare ticker symbols (all-caps 2-5 letters), tag verified ones.
+
+    Only tags tickers that appear in us_stocks.json and are not common
+    abbreviations/acronyms. Returns (html, newly_tagged).
+    """
+    ticker_map = _ticker_info_map()
+    if not ticker_map:
+        return html, []
+
+    soup = BeautifulSoup(html, "html.parser")
+
+    # Collect text nodes not inside existing stock-tag spans
+    text_nodes = []
+    for node in soup.find_all(string=True):
+        parent = node.parent
+        if parent and getattr(parent, 'name', '') == 'span' and 'stock-tag' in parent.get('class', []):
+            continue
+        skip_parents = {'head', 'style', 'script', 'title', 'meta'}
+        if parent and any(p.name in skip_parents for p in parent.parents if hasattr(p, 'name')):
+            continue
+        text_nodes.append(node)
+
+    # Find all unique ticker candidates in text, sorted by length desc
+    # Use (?<![A-Za-z])...(?![A-Za-z]) instead of \b because \b treats
+    # Chinese characters as word chars, so "是ZENA" has no boundary.
+    ticker_re = re.compile(r'(?<![A-Za-z])([A-Z]{2,5})(?![A-Za-z])')
+    candidates = {}
+    for node in text_nodes:
+        for m in ticker_re.finditer(str(node)):
+            t = m.group(1)
+            if t not in _TICKER_STOP_WORDS and t in ticker_map and t not in candidates:
+                candidates[t] = ticker_map[t]
+
+    if not candidates:
+        return html, []
+
+    # Sort by length desc for longest-match-first replacement
+    tickers_sorted = sorted(candidates.keys(), key=len, reverse=True)
+
+    newly_tagged = []
+    seen_tickers = set()
+    regex = re.compile(r'(?<![A-Za-z])(' + '|'.join(re.escape(t) for t in tickers_sorted) + r')(?![A-Za-z])')
+
+    for node in text_nodes:
+        text = str(node)
+        if not regex.search(text):
+            continue
+        new_text = regex.sub(
+            lambda m: _make_ticker_tag(m.group(1), candidates[m.group(1)]),
+            text,
+        )
+        if new_text != text:
+            node.replace_with(BeautifulSoup(new_text, "html.parser"))
+            for t in set(regex.findall(text)):
+                if t not in seen_tickers:
+                    seen_tickers.add(t)
+                    name, market = candidates[t]
+                    newly_tagged.append((t, t, market, "美股"))
+
+    if newly_tagged:
+        print(f"Phase 3.5: 裸代码标注 {len(newly_tagged)} 只")
+        for name, ticker, market, mkt_label in newly_tagged:
+            print(f"  + [{mkt_label}] {ticker} ({market})")
+
+    return str(soup), newly_tagged
+
+
+def _make_ticker_tag(ticker, info):
+    """Build a stock-tag span from ticker info."""
+    name, market = info
+    return f'<span class="stock-tag">{name}（{market}：{ticker}）</span>'
 
 
 # ---------------------------------------------------------------------------
@@ -349,10 +534,13 @@ def tag_missing_companies(html):
 
     Uses AKShare for A-shares + us_stocks.json for US stocks.
     Adds <span class=\"stock-tag\"> for untagged companies.
+
+    Returns (html, newly_tagged) where newly_tagged is a list of
+    (name, ticker, market_code, market_label) tuples.
     """
     market_maps = _all_stock_maps()
     if not market_maps:
-        return html
+        return html, []
 
     soup = BeautifulSoup(html, "html.parser")
 
@@ -371,7 +559,6 @@ def tag_missing_companies(html):
     all_names = {}
     for mkt_map in market_maps:
         for name, (ticker, market, mkt_label) in mkt_map.items():
-            # Only add if not already present (A-shares take priority for Chinese names)
             if name not in all_names or mkt_label == "A股":
                 all_names[name] = (ticker, market, mkt_label)
     names_sorted = sorted(all_names.keys(), key=len, reverse=True)
@@ -394,7 +581,7 @@ def tag_missing_companies(html):
         for name, ticker, market, mkt_label in newly_tagged:
             print(f"  + [{mkt_label}] {name} ({market}:{ticker})")
 
-    return str(soup)
+    return str(soup), newly_tagged
 
 
 # ---------------------------------------------------------------------------
@@ -481,7 +668,79 @@ def main():
 
     # --- Phase 3: Tag untagged companies ---
     print("Phase 3: 扫描未标注公司...")
-    html = tag_missing_companies(html)
+    html, newly_tagged = tag_missing_companies(html)
+
+    # --- Verify Phase 3 additions ---
+    if newly_tagged:
+        seen_tickers = {c["ticker"] for c in verified}
+        print(f"Phase 3: 验证 {len(newly_tagged)} 只新标注股票...")
+        for name, ticker, market, mkt_label in newly_tagged:
+            if ticker in seen_tickers:
+                continue
+            seen_tickers.add(ticker)
+            market_code = detect_market(ticker, "")
+            print(f"  [{market_code}] {ticker} ({name}) ... ", end="")
+
+            if market_code == "CN":
+                num = re.sub(r'\.(SH|SZ)$', '', ticker)
+                info = verify_cn(num)
+            elif market_code == "US":
+                info = verify_us(ticker)
+            else:
+                info = verify_us(ticker)  # yfinance for global
+
+            if info:
+                print(f"{info.get('name', '?')}")
+                verified.append({
+                    "ticker": ticker,
+                    "market": market_code,
+                    "verified": True,
+                    "name": info.get("name", name),
+                    "sector": info.get("sector", ""),
+                    "industry": info.get("industry", ""),
+                    "marketCap": info.get("marketCap"),
+                    "website": info.get("website", ""),
+                })
+            else:
+                print("NOT FOUND")
+                verified.append({
+                    "ticker": ticker, "market": market_code, "verified": False,
+                    "name": name,
+                })
+
+    # --- Phase 3.5: Tag bare tickers ---
+    print("Phase 3.5: 扫描裸股票代码...")
+    html, bare_tagged = tag_bare_tickers(html)
+
+    # --- Verify Phase 3.5 additions ---
+    if bare_tagged:
+        seen_tickers = {c["ticker"] for c in verified}
+        print(f"Phase 3.5: 验证 {len(bare_tagged)} 只裸代码...")
+        for name, ticker, market, mkt_label in bare_tagged:
+            if ticker in seen_tickers:
+                continue
+            seen_tickers.add(ticker)
+            print(f"  [US] {ticker} ({market}) ... ", end="")
+
+            info = verify_us(ticker)
+            if info and info.get("name"):
+                print(f"{info['name']}")
+                verified.append({
+                    "ticker": ticker,
+                    "market": "US",
+                    "verified": True,
+                    "name": info.get("name", name),
+                    "sector": info.get("sector", ""),
+                    "industry": info.get("industry", ""),
+                    "marketCap": info.get("marketCap"),
+                    "website": info.get("website", ""),
+                })
+            else:
+                print("NOT FOUND (us_stocks only)")
+                verified.append({
+                    "ticker": ticker, "market": "US", "verified": True,
+                    "name": name,
+                })
 
     # --- Output ---
     # Verified HTML

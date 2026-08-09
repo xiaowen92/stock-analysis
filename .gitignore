@@ -6,3 +6,6 @@
 .env
 __pycache__/
 .DS_Store
+*.html
+/wechat-audio-transcriber/html
+/wechat-audio-transcriber/txt
